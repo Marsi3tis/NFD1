@@ -10,6 +10,8 @@ public class DropPickup : MonoBehaviour
         if (!other.CompareTag("Player"))
             return;
 
+        UnityEngine.Debug.Log("Drop picked up!");
+
         if (spawner != null)
         {
             spawner.FreeSpawnPoint(spawnPointIndex);
