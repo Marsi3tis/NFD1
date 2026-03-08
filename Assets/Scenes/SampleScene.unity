@@ -1605,6 +1605,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1316581897}
   - component: {fileID: 1316581896}
+  - component: {fileID: 1316581899}
   - component: {fileID: 1316581898}
   m_Layer: 0
   m_Name: Car
@@ -1668,6 +1669,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3c5d6b8688341d40be9cac883d74d79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  driftFactor: 0.5
+  accelerationFactor: 4
+  turnFactor: 2
+  maxSpeed: 10
+  reverseFactor: 0.5
+--- !u!114 &1316581899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1316581895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acbbef9f819115e48a5d5d6e9b3fc195, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CarInput
 --- !u!1 &1661545504
 GameObject:
   m_ObjectHideFlags: 0
@@ -1693,13 +1711,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1661545504}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
   m_LocalPosition: {x: 0.69, y: 1.14, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1316581897}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
 --- !u!212 &1661545506
 SpriteRenderer:
   serializedVersion: 2
