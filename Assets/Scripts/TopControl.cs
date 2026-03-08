@@ -36,6 +36,11 @@ public class TopControl : MonoBehaviour
     {
         rotationAngle -= steeringInput * turnFactor;
 
-        carRigidbody2D.MoveRotation(rota)
+        carRigidbody2D.MoveRotation(rotationAngle);
+    }
+    void SetInputVector()
+    {
+        steeringInput = SetInputVector.x;
+        accelerationInput = SetInputVector.y;
     }
 }
