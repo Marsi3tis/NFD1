@@ -1918,6 +1918,7 @@ GameObject:
   - component: {fileID: 1316581899}
   - component: {fileID: 1316581898}
   - component: {fileID: 1316581900}
+  - component: {fileID: 1316581901}
   m_Layer: 0
   m_Name: Car
   m_TagString: Player
@@ -1992,11 +1993,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1424de7154fbb5c44bf9cf2b66734610, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TopControl
-  driftFactor: 0.2
-  accelerationFactor: 2
-  turnFactor: 3
-  maxSpeed: 10
-  reverseFactor: 0.5
 --- !u!58 &1316581900
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -2033,6 +2029,23 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
+--- !u!114 &1316581901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1316581895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3c5d6b8688341d40be9cac883d74d79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TopControl
+  driftFactor: 0.2
+  accelerationFactor: 2
+  turnFactor: 3
+  maxSpeed: 10
+  reverseFactor: 0.5
 --- !u!1 &1320972810
 GameObject:
   m_ObjectHideFlags: 0
