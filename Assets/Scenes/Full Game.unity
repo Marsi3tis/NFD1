@@ -779,6 +779,7 @@ GameObject:
   m_Component:
   - component: {fileID: 306094250}
   - component: {fileID: 306094251}
+  - component: {fileID: 306094252}
   m_Layer: 0
   m_Name: TrailMarksL
   m_TagString: Untagged
@@ -911,6 +912,18 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
+--- !u!114 &306094252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 306094249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4e50cc5c725334b8314d749412ca4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TrailMarkRender
 --- !u!1 &320448919
 GameObject:
   m_ObjectHideFlags: 0
@@ -2655,6 +2668,7 @@ GameObject:
   m_Component:
   - component: {fileID: 822629482}
   - component: {fileID: 822629483}
+  - component: {fileID: 822629484}
   m_Layer: 0
   m_Name: TrailMarksL
   m_TagString: Untagged
@@ -2787,6 +2801,18 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
+--- !u!114 &822629484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 822629481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4e50cc5c725334b8314d749412ca4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TrailMarkRender
 --- !u!1 &858456714
 GameObject:
   m_ObjectHideFlags: 0
@@ -4136,6 +4162,7 @@ GameObject:
   m_Component:
   - component: {fileID: 884658837}
   - component: {fileID: 884658838}
+  - component: {fileID: 884658839}
   m_Layer: 0
   m_Name: TrailMarksR
   m_TagString: Untagged
@@ -4268,6 +4295,18 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
+--- !u!114 &884658839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 884658836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4e50cc5c725334b8314d749412ca4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TrailMarkRender
 --- !u!1 &922871758
 GameObject:
   m_ObjectHideFlags: 0
@@ -4415,6 +4454,7 @@ GameObject:
   m_Component:
   - component: {fileID: 932795476}
   - component: {fileID: 932795477}
+  - component: {fileID: 932795478}
   m_Layer: 0
   m_Name: TrailMarksL
   m_TagString: Untagged
@@ -4547,6 +4587,18 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
+--- !u!114 &932795478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 932795475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4e50cc5c725334b8314d749412ca4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TrailMarkRender
 --- !u!1 &976454200
 GameObject:
   m_ObjectHideFlags: 0
@@ -4557,6 +4609,7 @@ GameObject:
   m_Component:
   - component: {fileID: 976454201}
   - component: {fileID: 976454202}
+  - component: {fileID: 976454203}
   m_Layer: 0
   m_Name: TrailMarksR
   m_TagString: Untagged
@@ -4689,6 +4742,18 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
+--- !u!114 &976454203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 976454200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4e50cc5c725334b8314d749412ca4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TrailMarkRender
 --- !u!1 &1010919955
 GameObject:
   m_ObjectHideFlags: 0
@@ -5127,6 +5192,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1241260957}
   - component: {fileID: 1241260958}
+  - component: {fileID: 1241260959}
   m_Layer: 0
   m_Name: TrailMarksL
   m_TagString: Untagged
@@ -5259,6 +5325,18 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
+--- !u!114 &1241260959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1241260956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4e50cc5c725334b8314d749412ca4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TrailMarkRender
 --- !u!1 &1275635327
 GameObject:
   m_ObjectHideFlags: 0
@@ -6003,6 +6081,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1486537000}
   - component: {fileID: 1486537001}
+  - component: {fileID: 1486537002}
   m_Layer: 0
   m_Name: TrailMarksR
   m_TagString: Untagged
@@ -6135,6 +6214,18 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
+--- !u!114 &1486537002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1486536999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4e50cc5c725334b8314d749412ca4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TrailMarkRender
 --- !u!1 &1572572520
 GameObject:
   m_ObjectHideFlags: 0
@@ -6145,6 +6236,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1572572521}
   - component: {fileID: 1572572522}
+  - component: {fileID: 1572572523}
   m_Layer: 0
   m_Name: TrailMarksR
   m_TagString: Untagged
@@ -6277,6 +6369,18 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
+--- !u!114 &1572572523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1572572520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f4e50cc5c725334b8314d749412ca4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TrailMarkRender
 --- !u!1 &1767909763
 GameObject:
   m_ObjectHideFlags: 0
