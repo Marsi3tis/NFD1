@@ -10,7 +10,11 @@ public class DropPickup : MonoBehaviour
         if (!other.CompareTag("Player"))
             return;
 
-        UnityEngine.Debug.Log("Drop picked up!");
+        Debug.Log("Drop picked up!");
+
+        DropData data = GetComponent<DropData>();
+        if (data != null)
+            InventoryManager.Instance.AddItem(data.itemType);
 
         if (spawner != null)
         {
