@@ -4,10 +4,10 @@ public class TrailMarkRender : MonoBehaviour
 {
     TopControl topControl;
     TrailRenderer trailRenderer;
-
+    bool tireMarks = false;
     void Awake()
     {
-        topControl = GetComponent<TopControl>();
+        topControl = GetComponentInParent<TopControl>();
         trailRenderer = GetComponent<TrailRenderer>();
         trailRenderer.emitting = false;
     }
@@ -20,7 +20,7 @@ public class TrailMarkRender : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (topControl.IsTireSliding(out float lateralVelocity, out bool isBraking))
+        if (topControl.IsTireSliding(out float lateralVelocity, out bool isBrakingNow))
             trailRenderer.emitting = true;
         else trailRenderer.emitting = false;
     }

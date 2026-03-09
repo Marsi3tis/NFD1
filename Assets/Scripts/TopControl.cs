@@ -8,11 +8,11 @@ using UnityEngine.XR;
 public class TopControl : MonoBehaviour
 {
     [Header("Car Settings")]
-    public float driftFactor = 0.75f; // normal grip
-    public float accelerationFactor = 1.5f;
+    public float driftFactor = 0.1f; // normal grip
+    public float accelerationFactor = 4f;
     public float deaccelerationFactor = 2.0f;
     public float turnFactor = 2.0f;
-    public float maxSpeed = 8;
+    public float maxSpeed = 10;
     public float reverseFactor = 0.5f;
      [Header("Brake Settings")]
     public float brakeForce = 3.0f;         
@@ -106,18 +106,21 @@ public class TopControl : MonoBehaviour
     float GetLateralVelocity()
     {
         return Vector2.Dot(transform.right, carRigidbody2D.linearVelocity);
+    }    
+    public void SetBrake(bool brakeInput)
+    {
+        isHandBraking = brakeInput;
     }
     public bool IsTireSliding(out float lateralVelocity, out bool isBrakingNow)
     {
         lateralVelocity = GetLateralVelocity();
         isBrakingNow = false;
-
         if(accelerationInput < 0 && velocityVsUp > 0)
         {
-            isBrakingNow = true;
+            isBraking = true;
             return true;
         }
-        if(Mathf.Abs(GetLateralVelocity()) > 2.0f)
+        if(Mathf.Abs(GetLateralVelocity()) > 1.5f)
             return true;
 
         return false;
@@ -127,8 +130,5 @@ public class TopControl : MonoBehaviour
         steeringInput = inputVector.x;
         accelerationInput = inputVector.y;
     }
-    public void SetBrake(bool brakeInput)
-    {
-        isHandBraking = brakeInput;
-    }
+
 }

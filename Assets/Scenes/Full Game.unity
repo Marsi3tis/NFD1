@@ -942,7 +942,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3c5d6b8688341d40be9cac883d74d79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  driftFactor: 1
+  driftFactor: 0.1
   accelerationFactor: 4
   deaccelerationFactor: 2
   turnFactor: 2
@@ -1563,7 +1563,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3c5d6b8688341d40be9cac883d74d79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  driftFactor: 1
+  driftFactor: 0.1
   accelerationFactor: 4
   deaccelerationFactor: 2
   turnFactor: 2
@@ -2561,7 +2561,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 8d3b0e2cc34380441803595aa88fddc3, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -5507,7 +5507,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3c5d6b8688341d40be9cac883d74d79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  driftFactor: 1
+  driftFactor: 0.1
   accelerationFactor: 4
   deaccelerationFactor: 2
   turnFactor: 2
@@ -5894,7 +5894,7 @@ GameObject:
   - component: {fileID: 1408427329}
   - component: {fileID: 1408427328}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: MainMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6767,12 +6767,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3c5d6b8688341d40be9cac883d74d79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  driftFactor: 1
+  driftFactor: 0.1
   accelerationFactor: 4
   deaccelerationFactor: 2
   turnFactor: 2
   maxSpeed: 10
-  reverseFactor: 0.5
+  reverseFactor: 1
   brakeForce: 3
   handBrakeDriftFactor: 0.97
   switchDirectionThreshold: 0.5
