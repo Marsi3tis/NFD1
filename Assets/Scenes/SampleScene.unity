@@ -2597,7 +2597,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1316581897}
   - component: {fileID: 1316581896}
-  - component: {fileID: 1316581899}
   - component: {fileID: 1316581898}
   - component: {fileID: 1316581900}
   - component: {fileID: 1316581901}
@@ -2663,18 +2662,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acbbef9f819115e48a5d5d6e9b3fc195, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CarInput
---- !u!114 &1316581899
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1316581895}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1424de7154fbb5c44bf9cf2b66734610, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TopControl
 --- !u!58 &1316581900
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -2820,7 +2807,7 @@ Transform:
   m_GameObject: {fileID: 1661545504}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
-  m_LocalPosition: {x: 0.69, y: 1.14, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3356,7 +3343,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4655700937759966734, guid: 2af551a32aba72c4699b3ea93b401228, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.12
+      value: 4.08
       objectReference: {fileID: 0}
     - target: {fileID: 4655700937759966734, guid: 2af551a32aba72c4699b3ea93b401228, type: 3}
       propertyPath: m_LocalPosition.y

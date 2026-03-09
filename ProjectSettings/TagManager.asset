@@ -38,6 +38,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: PitOfHell
+    uniqueID: 422126355
+    locked: 0
   - name: Background
     uniqueID: 3112630573
     locked: 0
