@@ -7,6 +7,7 @@ using UnityEngine.Rendering;
 using UnityEngine.XR;
 public class TopControl : MonoBehaviour
 {
+    public static TopControl Instance { get; private set; }
     [Header("Car Settings")]
     public float driftFactor = 0.1f; // normal grip
     public float accelerationFactor = 4f;
@@ -28,6 +29,12 @@ public class TopControl : MonoBehaviour
     Rigidbody2D carRigidbody2D;
     void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
         carRigidbody2D = GetComponent<Rigidbody2D>();
     }
     void FixedUpdate()
@@ -81,6 +88,10 @@ public class TopControl : MonoBehaviour
         carRigidbody2D.AddForce(engineForceVector, ForceMode2D.Force);      
 
 
+    }
+    public void StopTheCar()
+    {
+        carRigidbody2D.linearVelocity.Set(0,0);
     }
     void ApplySteering()
     {

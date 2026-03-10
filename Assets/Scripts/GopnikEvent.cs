@@ -1,12 +1,16 @@
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using NUnit.Framework;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 public class GopnikEvent : MonoBehaviour
 {
+    [Header("Event Settings")]
+    [Range(0f, 1.0f)] public float option1;
+    [Range(0f, 1.0f)] public float option2;
+    public int option1Success = 50;
+    public int option1Fail = 70;
+    public int option2Success = 20;
+    public int option2Fail = 50;
+    public int option3 = 100;
+
     public static GopnikEvent Instance;
     public EventPopUpUI popUpUI;
     public Image backgroundImage;
@@ -14,20 +18,21 @@ public class GopnikEvent : MonoBehaviour
     public float eventChance = 1.0f;
     void Awake()
     {
+        
         Instance = this;
-        Debug.Log("GopnikEvent Awake ran");
     }
     public void DropIsPicked()
     {
-        Debug.Log("aga");
         float roll = Random.Range(0f, 1.0f);
         if(roll <= eventChance)
         {
             StartGopnikEvent();
+            
         }
     }
     private void StartGopnikEvent()
     {
+        TopControl.Instance.StopTheCar();
         popUpUI.Show(
             "Title",
             backgroundImage,
@@ -35,19 +40,49 @@ public class GopnikEvent : MonoBehaviour
             "Pisi i barzda",
             () =>
             {
-                Debug.Log("Pisai i barzda");
+                Debug.Log("eventtt");
+                OnOption1();
             },
             "Bandai pabegt",
             () =>
             {
-                Debug.Log("pabegai");
+                OnOption2();
             },
             "atiduok dropus",
             () =>
             {
-                Debug.Log("atidavei dropukus");
+                OnOption3();
             }
 
         );
+        void OnOption1()
+        {
+            float roll = Random.Range(0f, 1.0f);
+            if(roll <= option1)
+            {
+                ExperienceManager.Instance.AddXP(option1Success);
+            }
+            else
+            {
+                ExperienceManager.Instance.RemoveXP(option1Fail);
+            }
+        }
+        void OnOption2()
+        {
+            float roll = Random.Range(0f, 1.0f);
+            if(roll <= option1)
+            {
+                ExperienceManager.Instance.AddXP(option2Success);
+
+            }
+            else
+            {
+                ExperienceManager.Instance.RemoveXP(option2Fail);
+            }
+        }
+        void OnOption3()
+        {
+            ExperienceManager.Instance.RemoveXP(option3);
+        }
     }
 }
