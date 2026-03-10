@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 4655700937759966734}
   - component: {fileID: 7419114206830656356}
   - component: {fileID: 4356503666846222902}
-  - component: {fileID: -4492439107353425086}
+  - component: {fileID: 7612250892236167509}
   - component: {fileID: -3879535055051370277}
+  - component: {fileID: 1295846399434855713}
   m_Layer: 0
   m_Name: Drop_KR
   m_TagString: Untagged
@@ -130,7 +131,7 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.48
---- !u!114 &-4492439107353425086
+--- !u!114 &7612250892236167509
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -139,7 +140,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5339697409310606988}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d4a1ad14d626d449a4c1b7d1fb127bf, type: 3}
+  m_Script: {fileID: 11500000, guid: 73439ac5cbe1f344688e9e1c4e2f7143, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DropPickup
   spawner: {fileID: 0}
@@ -157,3 +158,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DropData
   itemType: 1
+--- !u!114 &1295846399434855713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5339697409310606988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9245447eecb2a7149940c8a198ac23eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::XPReward
+  xpAmount: 20
