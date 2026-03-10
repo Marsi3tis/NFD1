@@ -23,11 +23,9 @@ public class TopControl : MonoBehaviour
     float steeringInput = 0;
     float rotationAngle = 0;
     float velocityVsUp = 0;
-    bool isBraking = false;
     bool isHandBraking = false;
     //Components
     Rigidbody2D carRigidbody2D;
-    
     void Awake()
     {
         carRigidbody2D = GetComponent<Rigidbody2D>();
@@ -103,6 +101,10 @@ public class TopControl : MonoBehaviour
         carRigidbody2D.linearVelocity = forwardVelocity + rightVelocity * currentDriftFactor;
         
     }
+    public float GetVelocityMagnitude()
+    {
+        return carRigidbody2D.linearVelocity.magnitude;
+    }
     float GetLateralVelocity()
     {
         return Vector2.Dot(transform.right, carRigidbody2D.linearVelocity);
@@ -117,7 +119,7 @@ public class TopControl : MonoBehaviour
         isBrakingNow = false;
         if(accelerationInput < 0 && velocityVsUp > 0)
         {
-            isBraking = true;
+            isBrakingNow = true;
             return true;
         }
         if(Mathf.Abs(GetLateralVelocity()) > 1.5f)

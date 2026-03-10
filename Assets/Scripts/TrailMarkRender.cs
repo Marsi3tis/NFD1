@@ -4,7 +4,6 @@ public class TrailMarkRender : MonoBehaviour
 {
     TopControl topControl;
     TrailRenderer trailRenderer;
-    bool tireMarks = false;
     void Awake()
     {
         topControl = GetComponentInParent<TopControl>();
