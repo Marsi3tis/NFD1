@@ -8,6 +8,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
+  - enabled: 1
+    path: Assets/Scenes/Full Game.unity
+    guid: 0797bec6cf17eb84d955426c6a08b7f2
+  - enabled: 1
+    path: Assets/Scenes/GopnikEventScene.unity
+    guid: b3c33867ae6d1b74e8ede076cb8b604b
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

@@ -23,7 +23,6 @@ public class TopControl : MonoBehaviour
     float steeringInput = 0;
     float rotationAngle = 0;
     float velocityVsUp = 0;
-    bool isBraking = false;
     bool isHandBraking = false;
     //Components
     Rigidbody2D carRigidbody2D;
