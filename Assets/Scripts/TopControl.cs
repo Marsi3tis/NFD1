@@ -91,7 +91,7 @@ public class TopControl : MonoBehaviour
     }
     public void StopTheCar()
     {
-        carRigidbody2D.linearVelocity.Set(0,0);
+       // carRigidbody2D.linearVelocity.Set();
     }
     void ApplySteering()
     {
