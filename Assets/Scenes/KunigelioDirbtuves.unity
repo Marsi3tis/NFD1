@@ -6021,7 +6021,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 8134568735178559642, guid: d868df105f7a7824ba5739b15f1fe7ad, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 974727752}
+      addedObject: {fileID: 974727759}
     - targetCorrespondingSourceObject: {fileID: 8134568735178559642, guid: d868df105f7a7824ba5739b15f1fe7ad, type: 3}
       insertIndex: -1
       addedObject: {fileID: 974727751}
@@ -38124,7 +38124,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DropData
   itemType: 2
---- !u!114 &974727752
+--- !u!114 &974727759
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -38133,9 +38133,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 974727750}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d4a1ad14d626d449a4c1b7d1fb127bf, type: 3}
+  m_Script: {fileID: 11500000, guid: 73439ac5cbe1f344688e9e1c4e2f7143, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DropPickup
+  spawner: {fileID: 397887413}
+  spawnPointIndex: 0
 --- !u!1 &1010898031
 GameObject:
   m_ObjectHideFlags: 0
@@ -49517,7 +49519,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DropData
   itemType: 0
---- !u!114 &1475396028
+--- !u!114 &1475396035
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -49526,9 +49528,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1475396026}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d4a1ad14d626d449a4c1b7d1fb127bf, type: 3}
+  m_Script: {fileID: 11500000, guid: 73439ac5cbe1f344688e9e1c4e2f7143, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DropPickup
+  spawner: {fileID: 0}
+  spawnPointIndex: 0
 --- !u!1 &1481605268
 GameObject:
   m_ObjectHideFlags: 0
@@ -57572,7 +57576,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DropData
   itemType: 1
---- !u!114 &1852819556
+--- !u!114 &1852819563
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -57581,9 +57585,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1852819554}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d4a1ad14d626d449a4c1b7d1fb127bf, type: 3}
+  m_Script: {fileID: 11500000, guid: 73439ac5cbe1f344688e9e1c4e2f7143, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DropPickup
+  spawner: {fileID: 0}
+  spawnPointIndex: 0
 --- !u!1 &1868853104
 GameObject:
   m_ObjectHideFlags: 0
@@ -62996,6 +63002,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Drop_KR
       objectReference: {fileID: 0}
+    - target: {fileID: 7612250892236167509, guid: 2af551a32aba72c4699b3ea93b401228, type: 3}
+      propertyPath: spawner
+      value: 
+      objectReference: {fileID: 397887413}
     m_RemovedComponents:
     - {fileID: 0}
     m_RemovedGameObjects:
@@ -63004,7 +63014,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 5339697409310606988, guid: 2af551a32aba72c4699b3ea93b401228, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1852819556}
+      addedObject: {fileID: 1852819563}
     - targetCorrespondingSourceObject: {fileID: 5339697409310606988, guid: 2af551a32aba72c4699b3ea93b401228, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1852819555}
@@ -83124,6 +83134,10 @@ PrefabInstance:
       propertyPath: backgroundImage
       value: 
       objectReference: {fileID: 1570144145}
+    - target: {fileID: 7892612433716827546, guid: 0fd03b1c76b29fe4aac8c1d0c0cdd381, type: 3}
+      propertyPath: spawner
+      value: 
+      objectReference: {fileID: 397887413}
     - target: {fileID: 9145024651290499380, guid: 0fd03b1c76b29fe4aac8c1d0c0cdd381, type: 3}
       propertyPath: m_Name
       value: Drop_Ganja
@@ -83137,7 +83151,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 9145024651290499380, guid: 0fd03b1c76b29fe4aac8c1d0c0cdd381, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1475396028}
+      addedObject: {fileID: 1475396035}
     - targetCorrespondingSourceObject: {fileID: 9145024651290499380, guid: 0fd03b1c76b29fe4aac8c1d0c0cdd381, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1475396027}

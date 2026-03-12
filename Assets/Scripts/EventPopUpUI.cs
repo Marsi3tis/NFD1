@@ -7,6 +7,7 @@ public class EventPopUpUI : MonoBehaviour
 {
     public GameObject root;
     public TMP_Text EventTitleText;
+    public TMP_Text EventDisc;
     public Image GopnikImage;
     public Image Background;
 
@@ -19,16 +20,18 @@ public class EventPopUpUI : MonoBehaviour
     public TMP_Text button3text;
     public void Show(
         string title,
+        string discription,
         Image image,
         Image background,
-        string choice1Text, Action choice1Action,
-        string choice2Text, Action choice2Action,
-        string choice3Text, Action choice3Action
+        string choice1Text = null, Action choice1Action = null,
+        string choice2Text = null, Action choice2Action = null,
+        string choice3Text = null, Action choice3Action = null
 
     )
     {
         root.SetActive(true);
         EventTitleText.text = title;
+        EventDisc.text = discription;
         GopnikImage = image;
         Background = background;
         SetupButton(button1, button1text, choice1Text, choice1Action);
@@ -43,8 +46,7 @@ public class EventPopUpUI : MonoBehaviour
         textLabel.text = text;
         button.onClick.AddListener(() =>
         {
-           action?.Invoke();
-           Hide(); 
+           action?.Invoke(); 
         });
     }
     public void Hide()

@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
+using Unity.Cinemachine;
+using UnityEditor.PackageManager.Requests;
 public class GopnikEvent : MonoBehaviour
 {
     [Header("Event Settings")]
@@ -12,10 +14,13 @@ public class GopnikEvent : MonoBehaviour
     public int option3 = 100;
 
     public static GopnikEvent Instance;
+    public CinemachineCamera cmCamera;
     public EventPopUpUI popUpUI;
     public Image backgroundImage;
     public Image robberImage;
     public float eventChance = 1.0f;
+
+    bool EventEnding;
     void Awake()
     {
         
@@ -26,21 +31,44 @@ public class GopnikEvent : MonoBehaviour
         float roll = Random.Range(0f, 1.0f);
         if(roll <= eventChance)
         {
-            StartGopnikEvent();
+            TopControl.Instance.StopTheCar();
+            cmCamera.PreviousStateIsValid = false;
+        
             
+            StartGopnikEvent();
         }
+    }
+    private void EndGopnikEvent()
+    {
+        
+        if(EventEnding == true)
+        {
+            popUpUI.Show(
+                "Title",
+                "LALALALAL111111111",
+                backgroundImage,
+                robberImage,
+                "Continue",
+                () =>
+                {
+                    popUpUI.Hide();
+                }
+
+        );
+        }
+
+        
     }
     private void StartGopnikEvent()
     {
-        TopControl.Instance.StopTheCar();
         popUpUI.Show(
             "Title",
+            "LALALALAL",
             backgroundImage,
             robberImage,
             "Pisi i barzda",
             () =>
             {
-                Debug.Log("eventtt");
                 OnOption1();
             },
             "Bandai pabegt",
@@ -54,35 +82,41 @@ public class GopnikEvent : MonoBehaviour
                 OnOption3();
             }
 
-        );
+        );}
         void OnOption1()
         {
             float roll = Random.Range(0f, 1.0f);
             if(roll <= option1)
             {
                 ExperienceManager.Instance.AddXP(option1Success);
+                EventEnding = true;
+                EndGopnikEvent();
             }
             else
             {
                 ExperienceManager.Instance.RemoveXP(option1Fail);
+                EventEnding = false;
             }
         }
         void OnOption2()
         {
             float roll = Random.Range(0f, 1.0f);
-            if(roll <= option1)
+            if(roll <= option2)
             {
                 ExperienceManager.Instance.AddXP(option2Success);
-
+                EventEnding = true;
+                EndGopnikEvent();
+                
             }
             else
             {
                 ExperienceManager.Instance.RemoveXP(option2Fail);
+                EventEnding = false;                
             }
         }
         void OnOption3()
         {
             ExperienceManager.Instance.RemoveXP(option3);
+            EventEnding = false;
         }
-    }
 }
