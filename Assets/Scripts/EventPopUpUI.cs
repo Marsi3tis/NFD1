@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class EventPopUpUI : MonoBehaviour
 {
+    GopnikEvent gopnikEvent;
     public GameObject root;
     public TMP_Text EventTitleText;
     public TMP_Text EventDisc;
@@ -18,6 +19,10 @@ public class EventPopUpUI : MonoBehaviour
     public TMP_Text button1text;
     public TMP_Text button2text;
     public TMP_Text button3text;
+    void Awake()
+    {
+        gopnikEvent = GetComponent<GopnikEvent>();
+    }
     public void Show(
         string title,
         string discription,
