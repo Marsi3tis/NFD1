@@ -26,7 +26,7 @@ public class DropPickup : MonoBehaviour
             spawner.FreeSpawnPoint(spawnPointIndex);
             spawner.SpawnDropAtFreePoint();
         }
-        GopnikEvent.Instance.DropIsPicked();
+
         Destroy(gameObject);
     }
 }

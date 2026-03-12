@@ -37,13 +37,6 @@ public class ExperienceManager : MonoBehaviour
 
         CheckLevelUp();
     }
-    public void RemoveXP(int amount)
-    {
-        currentXP -= amount;
-        Debug.Log($"Lost {amount} XP. Total: {currentXP}");
-
-        CheckLevelUp();
-    }
 
     public int GetXPForNextLevel()
     {

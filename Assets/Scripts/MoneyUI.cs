@@ -3,11 +3,11 @@ using TMPro;
 
 public class MoneyUI : MonoBehaviour
 {
-    public TMP_Text MoneyText;
+    public TMP_Text moneyText;
 
     private void Update()
     {
         if (MoneyManager.Instance == null) return;
-        MoneyText.text = "EUR" + MoneyManager.Instance.Money.ToString("F2");
+        moneyText.text = "EUR" + MoneyManager.Instance.Money.ToString("F2");
     }
 }
