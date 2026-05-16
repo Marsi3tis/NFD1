@@ -13,33 +13,29 @@ public class CarSelector : MonoBehaviour
     // Call this to save the current state
     public void SaveCarData()
     {
-        // Save Position
         PlayerPrefs.SetFloat("CarX", carRenderer.transform.position.x);
         PlayerPrefs.SetFloat("CarY", carRenderer.transform.position.y);
-
-        // Save Rotation (Just the Z axis)
         PlayerPrefs.SetFloat("CarRotZ", carRenderer.transform.eulerAngles.z);
 
-        PlayerPrefs.Save(); // Forces Unity to write to disk
+        // SAVE THE SPRITE NAME
+        PlayerPrefs.SetString("SelectedCar", carRenderer.sprite.name);
+
+        PlayerPrefs.Save();
     }
 
     void LoadCarData()
     {
-        // Check if we have a saved X position (otherwise it's the first time playing)
         if (PlayerPrefs.HasKey("CarX"))
         {
-            float x = PlayerPrefs.GetFloat("CarX");
-            float y = PlayerPrefs.GetFloat("CarY");
-            float zRot = PlayerPrefs.GetFloat("CarRotZ");
+            // ... (Your existing position/rotation loading code)
 
-            carRenderer.transform.position = new Vector3(x, y, 0);
-            carRenderer.transform.eulerAngles = new Vector3(0, 0, zRot + 180);
-        }
-        else
-        {
-            // Default setup if no save exists
-            carRenderer.transform.position = Vector3.zero;
-            carRenderer.transform.eulerAngles = new Vector3(0, 0, 180f);
+            // LOAD THE SPRITE
+            string savedCar = PlayerPrefs.GetString("SelectedCar");
+
+            if (savedCar == BMW.name) carRenderer.sprite = BMW;
+            else if (savedCar == Passat.name) carRenderer.sprite = Passat;
+            else if (savedCar == Prius.name) carRenderer.sprite = Prius;
+            else carRenderer.sprite = Default;
         }
     }
 

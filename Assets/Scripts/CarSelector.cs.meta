@@ -1,2 +1,16 @@
 fileFormatVersion: 2
 guid: ec8753e7f116bbc438c77fee8879ace2
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - BMW: {fileID: 6403830894073370601, guid: 89cebc9506cb1864b9141777c798e57c, type: 3}
+  - Default: {fileID: -2369867600477939372, guid: b767f94b311a16d46be15260bbdb466c, type: 3}
+  - Passat: {fileID: 5622330596176536583, guid: 1f5ae75fedc26044b926acf852d3b37c, type: 3}
+  - Prius: {fileID: -9150457145523775841, guid: 0a85e14833d888e45a8b8c7ac0c4b296, type: 3}
+  - carRenderer: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
