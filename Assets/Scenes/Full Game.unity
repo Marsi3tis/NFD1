@@ -3060,10 +3060,13 @@ MonoBehaviour:
   option2Success: 20
   option2Fail: 50
   option3: 100
+  option1FailDropLossPercent: 30
+  option2FailDropLossPercent: 50
+  option3DropLossPercent: 100
   cmCamera: {fileID: 0}
   popUpUI: {fileID: 1206995824}
-  backgroundImage: {fileID: 1399414722}
-  robberImage: {fileID: 2068237717}
+  backgroundSprite: {fileID: 0}
+  eventVariants: []
   eventChance: 0.2
 --- !u!1 &297612886
 GameObject:
@@ -8764,8 +8767,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d4a1ad14d626d449a4c1b7d1fb127bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DropPickup
-  spawner: {fileID: 0}
-  spawnPointIndex: 0
 --- !u!1 &440250917
 GameObject:
   m_ObjectHideFlags: 0
@@ -8938,8 +8939,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d4a1ad14d626d449a4c1b7d1fb127bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DropPickup
-  spawner: {fileID: 0}
-  spawnPointIndex: 0
 --- !u!1 &463476826
 GameObject:
   m_ObjectHideFlags: 0
@@ -13675,8 +13674,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d4a1ad14d626d449a4c1b7d1fb127bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DropPickup
-  spawner: {fileID: 0}
-  spawnPointIndex: 0
 --- !u!1 &1110525645
 GameObject:
   m_ObjectHideFlags: 0
@@ -14154,7 +14151,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.47498322, y: 0.26950693}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -14164,7 +14161,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.6135063, y: 0.9351969}
+  m_Size: {x: 0.608, y: 0.9}
   m_EdgeRadius: 0
 --- !u!114 &1159703688
 MonoBehaviour:
@@ -14691,6 +14688,7 @@ MonoBehaviour:
   root: {fileID: 1206995823}
   EventTitleText: {fileID: 114895909}
   EventDisc: {fileID: 0}
+  EventDialogueText: {fileID: 0}
   GopnikImage: {fileID: 2068237717}
   Background: {fileID: 1399414722}
   button1: {fileID: 815610210}
@@ -14699,6 +14697,9 @@ MonoBehaviour:
   button1text: {fileID: 1768352969}
   button2text: {fileID: 1140760969}
   button3text: {fileID: 1681943311}
+  infoButton: {fileID: 0}
+  infoPanel: {fileID: 0}
+  infoPanelText: {fileID: 0}
 --- !u!114 &1206995825
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21177,7 +21178,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
-        m_CallState: 0
+        m_CallState: 2
 --- !u!114 &1450043739
 MonoBehaviour:
   m_ObjectHideFlags: 0

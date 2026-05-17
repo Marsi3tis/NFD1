@@ -1,9 +1,21 @@
 using UnityEngine;
-using UnityEngine.UI;
+using System.Collections.Generic;
 using Unity.Cinemachine;
-using UnityEditor.PackageManager.Requests;
+using System;
+
 public class GopnikEvent : MonoBehaviour
 {
+    [Serializable]
+    public struct GopnikVariant
+    {
+        public string titleText;
+        public Sprite characterSprite;
+        [TextArea(3, 10)] public string descriptionText;
+        public List<string> dialogueOptions;
+        [TextArea(3, 10)] public string gopnikBio;
+        
+    }
+
     [Header("Event Settings")]
     [Range(0f, 1.0f)] public float option1;
     [Range(0f, 1.0f)] public float option2;
@@ -13,110 +25,156 @@ public class GopnikEvent : MonoBehaviour
     public int option2Fail = 50;
     public int option3 = 100;
 
+    [Header("Drop Loss Settings")]
+    [Range(0f, 100f)] public float option1FailDropLossPercent = 30f;
+    [Range(0f, 100f)] public float option2FailDropLossPercent = 50f;
+    [Range(0f, 100f)] public float option3DropLossPercent = 100f;
+
     public static GopnikEvent Instance;
     public CinemachineCamera cmCamera;
     public EventPopUpUI popUpUI;
-    public Image backgroundImage;
-    public Image robberImage;
+    
+    [Header("Visual Asset Settings")]
+    public Sprite backgroundSprite;       
+    public List<GopnikVariant> eventVariants;    
     public float eventChance = 1.0f;
-
+    private GopnikVariant activeVariant;
+    private string activeDialogue;
     bool EventEnding;
+
     void Awake()
     {
-        
         Instance = this;
     }
+
     public void DropIsPicked()
     {
-        float roll = Random.Range(0f, 1.0f);
+        float roll = UnityEngine.Random.Range(0f, 1.0f);
         if(roll <= eventChance)
         {
             TopControl.Instance.StopTheCar();
-            cmCamera.PreviousStateIsValid = false;
-        
+            
+            // NEW: Pick a fresh random image right when the event rolls
+            RollRandomRobberSprite();
             
             StartGopnikEvent();
         }
     }
+
+    private void RollRandomRobberSprite()
+    {
+    if (eventVariants != null && eventVariants.Count > 0)
+        {
+            int randomIndex = UnityEngine.Random.Range(0, eventVariants.Count);
+            activeVariant = eventVariants[randomIndex];
+
+            // NEW: Pick a random line of text from this specific character's pool
+            if (activeVariant.dialogueOptions != null && activeVariant.dialogueOptions.Count > 0)
+            {
+                int randomTextIndex = UnityEngine.Random.Range(0, activeVariant.dialogueOptions.Count);
+                activeDialogue = activeVariant.dialogueOptions[randomTextIndex];
+            }
+            else
+            {
+                activeDialogue = "ERROR"; 
+            }
+        }
+        else
+        {
+            activeVariant = new GopnikVariant { titleText = "ERROR", gopnikBio = "ERROR", characterSprite = null };
+            activeDialogue = "EVENT ERROR";
+        }
+    }
+
     private void EndGopnikEvent()
     {
-        
         if(EventEnding == true)
         {
+            // Reset the state machine flag for future events
+            EventEnding = false; 
+
             popUpUI.Show(
-                "Title",
-                "LALALALAL111111111",
-                backgroundImage,
-                robberImage,
+                activeVariant.titleText,
+                activeVariant.descriptionText,
+                activeDialogue,
+                activeVariant.characterSprite,
+                backgroundSprite,
+                activeVariant.gopnikBio,
                 "Continue",
                 () =>
                 {
                     popUpUI.Hide();
                 }
-
-        );
+            );
         }
-
-        
     }
+
     private void StartGopnikEvent()
     {
         popUpUI.Show(
-            "Title",
-            "LALALALAL",
-            backgroundImage,
-            robberImage,
+            activeVariant.titleText,
+            activeVariant.descriptionText,
+            activeDialogue,
+            activeVariant.characterSprite,
+            backgroundSprite,
+            activeVariant.gopnikBio,
             "Pisi i barzda",
-            () =>
-            {
-                OnOption1();
-            },
+            () => { OnOption1(); },
             "Bandai pabegt",
-            () =>
-            {
-                OnOption2();
-            },
+            () => { OnOption2(); },
             "atiduok dropus",
-            () =>
-            {
-                OnOption3();
-            }
+            () => { OnOption3(); }
+        );
+    }
 
-        );}
-        void OnOption1()
+    void OnOption1()
+    {
+        float roll = UnityEngine.Random.Range(0f, 1.0f);
+        if(roll <= option1)
         {
-            float roll = Random.Range(0f, 1.0f);
-            if(roll <= option1)
-            {
-                ExperienceManager.Instance.AddXP(option1Success);
-                EventEnding = true;
-                EndGopnikEvent();
-            }
-            else
-            {
-                ExperienceManager.Instance.RemoveXP(option1Fail);
-                EventEnding = false;
-            }
+            ExperienceManager.Instance.AddXP(option1Success);
+            EventEnding = true;
+            EndGopnikEvent();
         }
-        void OnOption2()
+        else
         {
-            float roll = Random.Range(0f, 1.0f);
-            if(roll <= option2)
-            {
-                ExperienceManager.Instance.AddXP(option2Success);
-                EventEnding = true;
-                EndGopnikEvent();
-                
-            }
-            else
-            {
-                ExperienceManager.Instance.RemoveXP(option2Fail);
-                EventEnding = false;                
-            }
+            ExperienceManager.Instance.RemoveXP(option1Fail);
+            RemoveDropsByPercent(option1FailDropLossPercent);
+            EventEnding = true;
+            EndGopnikEvent();
         }
-        void OnOption3()
+    }
+
+    void OnOption2()
+    {
+        float roll = UnityEngine.Random.Range(0f, 1.0f);
+        if(roll <= option2)
         {
-            ExperienceManager.Instance.RemoveXP(option3);
-            EventEnding = false;
+            ExperienceManager.Instance.AddXP(option2Success);
+            EventEnding = true;
+            EndGopnikEvent();
         }
+        else
+        {
+            ExperienceManager.Instance.RemoveXP(option2Fail);
+            RemoveDropsByPercent(option2FailDropLossPercent);
+            EventEnding = true;    
+            EndGopnikEvent();            
+        }
+    }
+
+    void OnOption3()
+    {
+        ExperienceManager.Instance.RemoveXP(option3);
+        RemoveDropsByPercent(option3DropLossPercent);
+        EventEnding = true;
+        EndGopnikEvent();
+    }
+
+    void RemoveDropsByPercent(float percent)
+    {
+        if (InventoryManager.Instance == null)
+            return;
+        InventoryManager.Instance.RemovePercentFromEachItem(percent);
+    }
 }

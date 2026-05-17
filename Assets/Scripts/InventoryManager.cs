@@ -39,6 +39,28 @@ public class InventoryManager : MonoBehaviour
         inventory[type] -= amount;
         return true;
     }
+    public Dictionary<ItemType, int> RemovePercentFromEachItem(float percent)
+    {
+        percent = Mathf.Clamp(percent, 0f, 100f);
+
+        Dictionary<ItemType, int> removedItems = new Dictionary<ItemType, int>();
+        List<ItemType> itemTypes = new List<ItemType>(inventory.Keys);
+
+        foreach (ItemType type in itemTypes)
+        {
+            int currentAmount = inventory[type];
+            int amountToRemove = Mathf.CeilToInt(currentAmount * (percent / 100f));
+
+            if (amountToRemove > currentAmount)
+                amountToRemove = currentAmount;
+
+            inventory[type] -= amountToRemove;
+            removedItems[type] = amountToRemove;
+        }
+
+        return removedItems;
+    }
+
 
     public int GetCount(ItemType type) => inventory[type];
 
