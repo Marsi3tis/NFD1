@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
+using NUnit.Framework;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -25,6 +27,8 @@ public class TopControl : MonoBehaviour
     float rotationAngle = 0;
     float velocityVsUp = 0;
     bool isHandBraking = false;
+    bool isControlEnabled = true;
+    public bool IsControlEnabled => isControlEnabled;
     //Components
     Rigidbody2D carRigidbody2D;
     void Awake()
@@ -36,6 +40,19 @@ public class TopControl : MonoBehaviour
         }
         Instance = this;
         carRigidbody2D = GetComponent<Rigidbody2D>();
+    }
+    public void DisableControl()
+    {
+        isControlEnabled = false;
+        steeringInput = 0f;
+        accelerationInput = 0f;
+        StopTheCar();
+    }
+    public void EnableControl()
+    {
+        isControlEnabled = true;
+        if(carRigidbody2D != null)
+            carRigidbody2D.WakeUp();
     }
     void FixedUpdate()
     {
@@ -141,6 +158,12 @@ public class TopControl : MonoBehaviour
     }
     public void SetInputVector(Vector2 inputVector)
     {
+        if (!isControlEnabled)
+        {
+            steeringInput = 0f;
+            accelerationInput = 0f;
+            return;
+        }
         steeringInput = inputVector.x;
         accelerationInput = inputVector.y;
     }

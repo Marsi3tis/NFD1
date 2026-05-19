@@ -49,7 +49,7 @@ public class CarSelector : MonoBehaviour
     // ... (Add SaveCarData() to your other button methods too!)
 
 
-public void OnDefaultButtonClick()
+    public void OnDefaultButtonClick()
     {
         carRenderer.sprite = Default;
         SaveCarData();

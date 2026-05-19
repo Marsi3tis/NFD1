@@ -2,30 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-
 public class CarSFX : MonoBehaviour
 {
     [Header("Audio")]
     public AudioSource tireSlideSource;
     public AudioSource carEngineSource;
     public AudioSource carCrashSource;
-
     //Local var
     float desiredEnginePitch = 0.7f;
     float tireSlidePitch = 0.5f;
     TopControl topControl;
-
     void Awake()
     {
         topControl = GetComponent<TopControl>();
     }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
         UpdateEngineSFX();
@@ -35,15 +25,13 @@ public class CarSFX : MonoBehaviour
     {
         float velocityMagnitude = topControl.GetVelocityMagnitude();
         float desiredEngineVolume = velocityMagnitude * 0.02f;
-
         desiredEngineVolume = Mathf.Clamp(desiredEngineVolume, 0.1f, 0.8f);
-
         carEngineSource.volume = Mathf.Lerp(carEngineSource.volume, desiredEngineVolume, Time.deltaTime * 10);
         desiredEnginePitch = velocityMagnitude * 0.2f;
         desiredEnginePitch = Mathf.Clamp(desiredEnginePitch, 0.7f, 2.5f);
         carEngineSource.pitch = Mathf.Lerp(carEngineSource.pitch, desiredEnginePitch, Time.deltaTime * 1.5f);
-    }
 
+    }
     void UpdateTireSlideSFX()
     {
         if (topControl.IsTireSliding(out float lateralVelocity, out bool isBrakingNow))
@@ -65,7 +53,6 @@ public class CarSFX : MonoBehaviour
     {
         float relativeVelocity = collision2D.relativeVelocity.magnitude;
         float volume = relativeVelocity * 0.4f;
-
         carCrashSource.pitch = Random.Range(0.9f, 1.0f);
         carCrashSource.volume = volume;
         if (!carCrashSource.isPlaying)

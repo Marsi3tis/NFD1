@@ -3,7 +3,7 @@ using UnityEngine;
 public class DropPickup : MonoBehaviour
 {
     public DropSpawnerPoints spawner;
-    public int spawnPointIndex;
+    public Vector3Int spawnPointIndex;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
