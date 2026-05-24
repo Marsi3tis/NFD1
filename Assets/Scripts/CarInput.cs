@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class CarInput : MonoBehaviour
 {
-    //Components
     TopControl topControl;
 
     void Awake()
