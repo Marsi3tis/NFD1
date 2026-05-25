@@ -1,63 +1,81 @@
+using UnityEngine;
+using TMPro;
 using System;
 using System.Collections.Generic;
-using System.Reflection;
-using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.SceneManagement;
 
-public class PoliceRaidEvent : MonoBehaviour
+
+public class PoliceEvent : MonoBehaviour
 {
+
     [Serializable]
     public struct PoliceVariant
     {
         public Sprite backgroundSprite;
         public string titleText;
         public Sprite characterSprite;
-        [TextArea(3, 10)] public string descriptionText;
+
+        [TextArea(3, 10)]
+        public string descriptionText;
+
         public List<string> dialogueOptions;
-        [TextArea(3, 10)] public string policeBio;
+
+        [TextArea(3, 10)]
+        public string policeBio;
     }
 
-    public static PoliceRaidEvent Instance;
+    [Header("Event Chance")]
+    [Range(0f, 1f)] public float eventChance = 0.25f;
 
-    [Header("UI")]
+    [Header("Option Chances")]
+    [Range(0f, 1f)] public float runChance = 0.45f;
+    [Range(0f, 1f)] public float hideChance = 0.55f;
+    [Range(0f, 1f)] public float riskChance = 0.35f;
+
+    [Header("Money Settings")]
+    [Min(1f)] public float bribeCost = 150f;
+
+    [Header("XP Settings")]
+    public int runSuccessXP = 30;
+    public int runFailXP = 50;
+    public int hideSuccessXP = 25;
+    public int hideFailXP = 40;
+    public int bribeSuccessXP = 20;
+    public int bribeFailXP = 60;
+    public int riskSuccessXP = 60;
+    public int riskFailXP = 80;
+
+    [Header("References")]
     public EventPopUpUI popUpUI;
+
+    [Header("Game Over UI")]
+    [SerializeField] private GameObject mainMenuObject;
+    [SerializeField] private GameObject inGameObject;
+    [SerializeField] private GameObject gameOverPanel;
+    [SerializeField] private TMP_Text gameOverReasonText;
+    [SerializeField] private bool pauseGameOnGameOver = true;
+
+    [Header("Game Over Event")]
+    public UnityEvent onPlayerArrest;
 
     [Header("Visual Asset Settings")]
     public List<PoliceVariant> eventVariants;
 
-    [Header("Standalone Drop Chance")]
-    [Tooltip("Used only if DropIsPicked() or TryStartEvent() is called directly. If you use DropRandomEventManager, this chance is ignored.")]
-    [Range(0f, 1f)] public float eventChance = 0.15f;
-
-    [Header("Police Raid Chances")]
-    [Range(0f, 1f)] public float documentsReleaseChance = 0.45f;
-    [Range(0f, 1f)] public float runSuccessChance = 0.30f;
-    [Range(0f, 1f)] public float bribeSuccessChance = 0.55f;
-    [Range(0f, 1f)] public float hideDropsSuccessChance = 0.40f;
-
-    [Header("Bribe Settings")]
-    public int bribeCost = 150;
-    [Tooltip("If false, bribe only rolls chance and does not check score/money.")]
-    public bool requireCurrencyForBribe = false;
-    [Tooltip("Optional manager that contains methods like CanAfford(int) and SpendScore(int).")]
-    public MonoBehaviour currencyManager;
-    public string canAffordMethodName = "CanAfford";
-    public string spendCurrencyMethodName = "SpendScore";
-
-    [Header("Game Over")]
-    public bool reloadCurrentSceneOnFail = true;
-    public UnityEvent onRaidFailed;
-    public UnityEvent onRaidSuccess;
+    public static PoliceEvent Instance;
 
     private PoliceVariant activeVariant;
     private string activeDialogue;
     private bool eventRunning;
+    private string lastGameOverReason;
+
     public bool IsEventRunning => eventRunning;
 
     private void Awake()
     {
         Instance = this;
+
+        if (gameOverPanel != null)
+            gameOverPanel.SetActive(false);
     }
 
     public void DropIsPicked()
@@ -70,7 +88,11 @@ public class PoliceRaidEvent : MonoBehaviour
         if (eventRunning)
             return false;
 
+        if (GopnikEvent.Instance != null && GopnikEvent.Instance.IsEventRunning)
+            return false;
+
         float roll = UnityEngine.Random.Range(0f, 1f);
+
         if (roll > eventChance)
             return false;
 
@@ -82,13 +104,23 @@ public class PoliceRaidEvent : MonoBehaviour
         if (eventRunning)
             return false;
 
+        if (GopnikEvent.Instance != null && GopnikEvent.Instance.IsEventRunning)
+            return false;
+
+        if (popUpUI == null)
+        {
+            Debug.LogError("PoliceEvent: popUpUI is not assigned.");
+            return false;
+        }
+
         eventRunning = true;
 
         if (TopControl.Instance != null)
             TopControl.Instance.StopTheCar();
 
         RollRandomPoliceVariant();
-        ShowDocumentsStage();
+        StartPoliceEvent();
+
         return true;
     }
 
@@ -106,92 +138,40 @@ public class PoliceRaidEvent : MonoBehaviour
             }
             else
             {
-                activeDialogue = "Pareigūnas: Dokumentus prašom.";
+                activeDialogue = "Pareigunas prieina prie lango ir laukia tavo sprendimo.";
             }
         }
         else
         {
             activeVariant = new PoliceVariant
             {
-                titleText = "POLICIJOS REIDAS",
-                descriptionText = "Policija sustabdo tavo automobilį ir paprašo dokumentų.",
-                policeBio = "Standartinis reido pareigūnas. Bloga diena, blogas žvilgsnis, blogas laikas turėti dropų.",
+                backgroundSprite = null,
                 characterSprite = null,
-                backgroundSprite = null
+                titleText = "Police event error",
+                descriptionText = "Nera priskirtu police event variantu.",
+                dialogueOptions = null,
+                policeBio = "Patikrink PoliceEvent Inspector lange."
             };
 
-            activeDialogue = "Pareigūnas: Dokumentus prašom.";
+            activeDialogue = "Truksta eventVariants.";
         }
     }
 
-    private void ShowDocumentsStage()
+    private void StartPoliceEvent()
     {
         popUpUI.Show(
-            GetTitle(),
-            GetDescription(),
-            activeDialogue + "\n\n",
+            SafeText(activeVariant.titleText, "Policijos reidas"),
+            SafeText(activeVariant.descriptionText, "Tave sustabde policija."),
+            SafeText(activeDialogue, "Ka darai?"),
             activeVariant.characterSprite,
             activeVariant.backgroundSprite,
-            GetBio(),
-            "Pateiki",
-            OnGiveDocuments,
-            "Nepateiki",
-            ShowRefuseDocumentsStage
-        );
-    }
-
-    private void OnGiveDocuments()
-    {
-        float roll = UnityEngine.Random.Range(0f, 1f);
-
-        if (roll <= documentsReleaseChance)
-        {
-            EndPoliceEventSuccess(
-                "Pareigūnas pavarto dokumentus, pažiūri į tave...\n\n" +
-                "-Gerai, laisvas. Gero kelio"
-            );
-        }
-        else
-        {
-            ShowSearchStage(
-                "Pareigūnas per ilgai žiūri į tavo dokumentus.\n\n" +
-                "-Būsite apieškomas dėl įtarimo, kad užsiėmėte neteisėta veikla."
-            );
-        }
-    }
-
-    private void ShowRefuseDocumentsStage()
-    {
-        popUpUI.Show(
-            GetTitle(),
-            GetDescription(),
-            "Atsisakai duoti dokumentus\n\n" +
-            "-Dar kartą sakau, dokumentus prašom.",
-            activeVariant.characterSprite,
-            activeVariant.backgroundSprite,
-            GetBio(),
-            "Bėgi",
+            SafeText(activeVariant.policeBio, ""),
+            "Begti",
             OnRun,
-            "Papirki",
-            OnBribeFromRefuseStage
-        );
-    }
-
-    private void ShowSearchStage(string searchDialogue)
-    {
-        popUpUI.Show(
-            GetTitle(),
-            GetDescription(),
-            searchDialogue + "\n\nPareigūnas ruošiasi jus apieškoti.",
-            activeVariant.characterSprite,
-            activeVariant.backgroundSprite,
-            GetBio(),
-            "Slepi dropus",
+            "Slepti dropus",
             OnHideDrops,
-            "Papirki",
-            OnBribeFromSearchStage,
-            "Bėgi",
-            OnRun
+            "Papirkti",
+            OnBribe
         );
     }
 
@@ -199,60 +179,18 @@ public class PoliceRaidEvent : MonoBehaviour
     {
         float roll = UnityEngine.Random.Range(0f, 1f);
 
-        if (roll <= runSuccessChance)
+        if (roll <= runChance)
         {
-            EndPoliceEventSuccess(
-                "Rimtas kentas, pabėgai nuo mentų\n\n" +
-                "Pareigūnai nespėjo sureaguoti, sėkmingai pabėgai nuo jų."
-            );
+            AddXP(runSuccessXP);
+            ShowSuccessResult("Pavyko pabegti. Pareigunai liko su svytureliais toli uz nugaros.");
         }
         else
         {
-            EndPoliceEventFail(
-                "Buvai pagautas ir supakuotas\n\n" +
-                "Istorijos pabaiga. Dabar kilnosi muilą kalėjime"
+            FailPoliceEvent(
+                runFailXP,
+                "Nepavyko pabegti. Pareigunai tave pagauna.",
+                "Game Over: tave sueme policija po nepavykusio begimo."
             );
-        }
-    }
-
-    private void OnBribeFromRefuseStage()
-    {
-        TryBribe(
-            "Bandai paduoti kyšį vietoj dokumentų.",
-            "Pareigūnas pažiūri į kupiūrą, bet jos neima",
-            "-Už bandymą papirkti pareigūną, esate sulaikytas."
-        );
-    }
-
-    private void OnBribeFromSearchStage()
-    {
-        TryBribe(
-            "Kol pareigūnas ruošiasi jus apieškoti, bandai išspręsti situaciją pinigais.",
-            "Pareigūnas patenkintas pinigais, palieka tave ramybėje.\n\n",
-            "Pareigūnas nepriima kyšio, o už bandymą papirkti pareigūną, esate sulaikytas."
-        );
-    }
-
-    private void TryBribe(string attemptText, string successText, string failText)
-    {
-        if (!CanPayBribe())
-        {
-            ShowSearchStage(
-                attemptText + "\n\nKišenėje per mažai pinigų. Pareigūnas neatrodo sužavėtas."
-            );
-            return;
-        }
-
-        SpendBribe();
-
-        float roll = UnityEngine.Random.Range(0f, 1f);
-        if (roll <= bribeSuccessChance)
-        {
-            EndPoliceEventSuccess(successText);
-        }
-        else
-        {
-            EndPoliceEventFail(failText);
         }
     }
 
@@ -260,139 +198,208 @@ public class PoliceRaidEvent : MonoBehaviour
     {
         float roll = UnityEngine.Random.Range(0f, 1f);
 
-        if (roll <= hideDropsSuccessChance)
+        if (roll <= hideChance)
         {
-            EndPoliceEventSuccess(
-                "Susikiši dropus, ten kur saulė nešviečia\n\n" +
-                "Pareigūnas apieško mašiną, bet randa tik cigarečių pakelį."
-            );
+            AddXP(hideSuccessXP);
+            ShowSuccessResult("Dropus paslepei laiku. Pareigunas nieko nerado.");
         }
         else
         {
-            EndPoliceEventFail(
-                "Bandai slėpti dropus, bet pareigūnas viską pamato.\n\n" +
-                "Iš karto esate sulaikytas už įtarimą dėl narkotikų platinimo."
+            FailPoliceEvent(
+                hideFailXP,
+                "Paslepimas nepavyko. Pareigunas rado dropus.",
+                "Game Over: policija rado dropus ir tave sueme."
             );
         }
     }
 
-    private void EndPoliceEventSuccess(string dialogue)
+    private void OnBribe()
+    {
+        if (bribeCost <= 0f)
+            bribeCost = 150f;
+
+        if (MoneyManager.Instance == null)
+        {
+            FailPoliceEvent(
+                bribeFailXP,
+                "Bandai papirkti pareiguna, bet pinigu sistema neveikia. Pareigunas nusprendzia, kad gana cirko.",
+                "Game Over: tave sueme uz bandyma papirkti pareiguna."
+            );
+            return;
+        }
+
+        if (!MoneyManager.Instance.CanAfford(bribeCost))
+        {
+            FailPoliceEvent(
+                bribeFailXP,
+                $"Bandai duoti kysi, bet neturi {bribeCost} cash. Pareigunas supranta, ka bandai padaryti.",
+                "Game Over: tave sueme uz bandyma papirkti pareiguna."
+            );
+            return;
+        }
+
+        bool paid = MoneyManager.Instance.SpendMoney(bribeCost);
+
+        if (!paid)
+        {
+            FailPoliceEvent(
+                bribeFailXP,
+                "Kysis nepavyko. Pareigunas supranta, ka bandai padaryti.",
+                "Game Over: tave sueme uz bandyma papirkti pareiguna."
+            );
+            return;
+        }
+
+        AddXP(bribeSuccessXP);
+        ShowSuccessResult($"Pareigunas paeme {bribeCost} cash ir nusprende, kad siandien nieko nemate.");
+    }
+
+    public void OnRisk()
+    {
+        float roll = UnityEngine.Random.Range(0f, 1f);
+
+        if (roll <= riskChance)
+        {
+            AddXP(riskSuccessXP);
+            ShowSuccessResult("Kazkaip praslydai. Net pareigunas liko sutrikes.");
+        }
+        else
+        {
+            FailPoliceEvent(
+                riskFailXP,
+                "Rizika nepasiteisino. Pareigunai padare pilna patikra.",
+                "Game Over: policija tave sueme po nesekmingos patikros."
+            );
+        }
+    }
+
+    private void ShowSuccessResult(string resultText)
     {
         popUpUI.Show(
-            GetTitle(),
-            GetDescription(),
-            dialogue,
+            SafeText(activeVariant.titleText, "Policijos reidas"),
+            SafeText(activeVariant.descriptionText, ""),
+            resultText,
             activeVariant.characterSprite,
             activeVariant.backgroundSprite,
-            GetBio(),
+            SafeText(activeVariant.policeBio, ""),
             "Continue",
-            () =>
-            {
-                eventRunning = false;
-                onRaidSuccess.Invoke();
-                FinishGopnikEvent();
-            }
+            FinishPoliceEvent
         );
     }
 
-    private void EndPoliceEventFail(string dialogue)
+    private void FailPoliceEvent(int xpLoss, string resultText, string gameOverReason)
     {
+        RemoveXP(xpLoss);
+        RemoveDropsByPercent(100f);
+
+        lastGameOverReason = gameOverReason;
+
         popUpUI.Show(
-            "SULAIKYTAS",
-            "Policijos reidas nepavyko.",
-            dialogue,
+            SafeText(activeVariant.titleText, "Policijos reidas"),
+            SafeText(activeVariant.descriptionText, ""),
+            resultText,
             activeVariant.characterSprite,
             activeVariant.backgroundSprite,
-            GetBio(),
-            reloadCurrentSceneOnFail ? "Restart" : "Game Over",
-            () =>
-            {
-                eventRunning = false;
-                onRaidFailed.Invoke();
-
-                if (reloadCurrentSceneOnFail)
-                {
-                    Time.timeScale = 1f;
-                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-                }
-            }
+            SafeText(activeVariant.policeBio, ""),
+            "Continue",
+            FinishPoliceEventWithGameOver
         );
     }
 
-    private bool CanPayBribe()
-    {
-        if (!requireCurrencyForBribe)
-            return true;
-
-        if (currencyManager == null)
-        {
-            Debug.LogWarning("PoliceRaidEvent: requireCurrencyForBribe is enabled, but currencyManager is not assigned.");
-            return false;
-        }
-
-        object result = InvokeCurrencyMethod(canAffordMethodName, bribeCost);
-        if (result is bool)
-            return (bool)result;
-
-        Debug.LogWarning("PoliceRaidEvent: CanAfford method not found or did not return bool. Method name: " + canAffordMethodName);
-        return false;
-    }
-
-    private void SpendBribe()
-    {
-        if (!requireCurrencyForBribe)
-            return;
-
-        if (currencyManager == null)
-            return;
-
-        object result = InvokeCurrencyMethod(spendCurrencyMethodName, bribeCost);
-        if (result == null)
-        {
-            Debug.LogWarning("PoliceRaidEvent: Spend method not found. Bribe succeeded/failed, but currency was not removed. Method name: " + spendCurrencyMethodName);
-        }
-    }
-
-    private object InvokeCurrencyMethod(string methodName, int amount)
-    {
-        Type type = currencyManager.GetType();
-
-        MethodInfo method = type.GetMethod(methodName, new Type[] { typeof(int) });
-        if (method != null)
-            return method.Invoke(currencyManager, new object[] { amount });
-
-        method = type.GetMethod(methodName, new Type[] { typeof(float) });
-        if (method != null)
-            return method.Invoke(currencyManager, new object[] { (float)amount });
-
-        method = type.GetMethod(methodName, Type.EmptyTypes);
-        if (method != null)
-            return method.Invoke(currencyManager, null);
-
-        return null;
-    }
-
-    private string GetTitle()
-    {
-        return string.IsNullOrEmpty(activeVariant.titleText) ? "POLICIJOS REIDAS" : activeVariant.titleText;
-    }
-
-    private string GetDescription()
-    {
-        return string.IsNullOrEmpty(activeVariant.descriptionText)
-            ? "Policija sustabdo tavo automobilį. Vienas neteisingas pasirinkimas gali baigti žaidimą."
-            : activeVariant.descriptionText;
-    }
-
-    private string GetBio()
-    {
-        return string.IsNullOrEmpty(activeVariant.policeBio)
-            ? "Policijos reidas. Sėkmė priklauso nuo pasirinkimo, rizikos ir šiek tiek nuo likimo."
-            : activeVariant.policeBio;
-    }
-    private void FinishGopnikEvent()
+    private void FinishPoliceEvent()
     {
         eventRunning = false;
-        popUpUI.Hide();
+
+        if (popUpUI != null)
+            popUpUI.Hide();
+    }
+
+    private void FinishPoliceEventWithGameOver()
+    {
+        eventRunning = false;
+
+        if (popUpUI != null)
+            popUpUI.Hide();
+
+        EndGame();
+    }
+
+    private void EndGame()
+    {
+        onPlayerArrest?.Invoke();
+        if (inGameObject != null)
+            inGameObject.SetActive(false);
+        
+        if (gameOverPanel != null)
+        {
+            gameOverPanel.SetActive(true);
+
+            if (gameOverReasonText != null)
+                gameOverReasonText.text = SafeText(lastGameOverReason, "Game Over");
+
+            if (pauseGameOnGameOver)
+                Time.timeScale = 0f;
+
+            return;
+        }
+        ShowMainMenu();
+    }
+    public void ShowMainMenu()
+    {
+        if (popUpUI != null)
+            popUpUI.Hide();
+
+        if (gameOverPanel != null)
+            gameOverPanel.SetActive(false);
+
+        if (inGameObject != null)
+            inGameObject.SetActive(false);
+
+        if (mainMenuObject != null)
+            mainMenuObject.SetActive(true);
+        else
+            Debug.LogError("PoliceEvent: Main Menu Object is not assigned.");
+
+        if (pauseGameOnGameOver)
+            Time.timeScale = 0f;
+    }
+
+    public void RestartAfterGameOver()
+    {
+        Time.timeScale = 1f;
+
+        if (gameOverPanel != null)
+            gameOverPanel.SetActive(false);
+            
+        if (inGameObject != null)
+            inGameObject.SetActive(true);
+
+        if (mainMenuObject != null)
+            mainMenuObject.SetActive(true);
+    }
+    private void AddXP(int amount)
+    {
+        if (ExperienceManager.Instance != null)
+            ExperienceManager.Instance.AddXP(amount);
+    }
+
+    private void RemoveXP(int amount)
+    {
+        if (ExperienceManager.Instance != null)
+            ExperienceManager.Instance.RemoveXP(amount);
+    }
+
+    private void RemoveDropsByPercent(float percent)
+    {
+        if (InventoryManager.Instance != null)
+            InventoryManager.Instance.RemovePercentFromEachItem(percent);
+    }
+
+    private string SafeText(string value, string fallback)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+            return fallback;
+
+        return value;
     }
 }

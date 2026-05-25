@@ -3501,7 +3501,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ExperienceManager
   baseXPPerLevel: 100
   levelScaling: 1.5
+  skillPointsPerLevel: 1
+  currentXP: 0
+  currentLevel: 1
+  skillPoints: 0
   OnLevelUp:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSkillPointsChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnRankChanged:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &363124631
@@ -102082,7 +102092,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ExperienceUI
   levelText: {fileID: 2014746283}
+  rankText: {fileID: 0}
   xpText: {fileID: 1929270736}
+  skillPointsText: {fileID: 0}
   xpProgressBar: {fileID: 1104493070}
 --- !u!114 &1272796461
 MonoBehaviour:
@@ -113868,9 +113880,7 @@ MonoBehaviour:
   option1FailDropLossPercent: 30
   option2FailDropLossPercent: 50
   option3DropLossPercent: 100
-  cmCamera: {fileID: 1297295327}
   popUpUI: {fileID: 890259147}
-  backgroundSprites: []
   eventVariants:
   - backgroundSprite: {fileID: 1214542597927250460, guid: 48922baea00318142908800454c8db5a, type: 3}
     titleText: Edgaras "Edga"
