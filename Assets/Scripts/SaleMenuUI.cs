@@ -90,9 +90,9 @@ public class SaleMenuUI : MonoBehaviour
         sniegasCountText.text = "x" + sniegasCount;
 
         // Update prices
-        ganjaPriceText.text   = "$" + currentSalePoint.GetPrice(ItemType.Ganja)   + " each";
-        krPriceText.text      = "$" + currentSalePoint.GetPrice(ItemType.Kr)      + " each";
-        sniegasPriceText.text = "$" + currentSalePoint.GetPrice(ItemType.Sniegas) + " each";
+        ganjaPriceText.text   = "€" + currentSalePoint.GetPrice(ItemType.Ganja)   + " each";
+        krPriceText.text      = "€" + currentSalePoint.GetPrice(ItemType.Kr)      + " each";
+        sniegasPriceText.text = "€" + currentSalePoint.GetPrice(ItemType.Sniegas) + " each";
 
         // Clamp and update sliders
         ganjaSlider.maxValue   = ganjaCount;
@@ -112,7 +112,7 @@ public class SaleMenuUI : MonoBehaviour
                     + (krAmt      * currentSalePoint.GetPrice(ItemType.Kr))
                     + (sniegasAmt * currentSalePoint.GetPrice(ItemType.Sniegas));
 
-        totalValueText.text = "Total: $" + total;
+        totalValueText.text = "Total: €" + total;
     }
 
     private void SellItem(ItemType type)

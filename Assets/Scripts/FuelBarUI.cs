@@ -54,7 +54,7 @@ public class FuelBarUI : MonoBehaviour
 
         // --- Tekstas ---
         if (fuelLabel != null)
-            fuelLabel.text = $"FUEL  {current:F0} / {max:F0}";
+            fuelLabel.text = $"FUEL  {current:F0}/{max:F0}";
 
         // --- Mirksi kai mažai ---
         isBlinking = percent * 100f <= lowFuelThreshold;
