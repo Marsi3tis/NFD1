@@ -28,6 +28,9 @@ public class DropPickup : MonoBehaviour
         }
 
         Destroy(gameObject);
-        GopnikEvent.Instance.DropIsPicked();
+        if(DropRandomEventManager.Instance != null)
+        {
+            DropRandomEventManager.Instance.DropIsPicked();
+        }
     }
 }
