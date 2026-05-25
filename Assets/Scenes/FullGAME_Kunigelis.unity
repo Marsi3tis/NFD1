@@ -106393,7 +106393,7 @@ MonoBehaviour:
   gopnikWeight: 2
   policeRaidWeight: 1
   showDebugLogs: 1
-  enableDebugKeys: 1
+  enableDebugKeys: 0
   forceGopnikKey: 290
   forcePoliceKey: 289
   chancePreview: 'No Event: 85%
