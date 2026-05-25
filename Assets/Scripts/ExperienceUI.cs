@@ -16,10 +16,10 @@ public class ExperienceUI : MonoBehaviour
             return;
 
         if (levelText != null)
-            levelText.text = "Level " + ExperienceManager.Instance.CurrentLevel;
+            levelText.text = "Rank: " + ExperienceManager.Instance.CurrentRank;
 
         if (rankText != null)
-            rankText.text = "Rank: " + ExperienceManager.Instance.CurrentRank;
+            rankText.text = "";
 
         if (xpText != null)
             xpText.text = ExperienceManager.Instance.CurrentXP + " / " +
