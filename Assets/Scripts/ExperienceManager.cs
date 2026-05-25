@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 
 public class ExperienceManager : MonoBehaviour
@@ -6,17 +6,46 @@ public class ExperienceManager : MonoBehaviour
     public static ExperienceManager Instance { get; private set; }
 
     [Header("Leveling Settings")]
-    public int baseXPPerLevel = 100;  // XP needed for level 1 -> 2
-    public float levelScaling = 1.5f; // multiplier per level
+    public int baseXPPerLevel = 100;
+    public float levelScaling = 1.5f;
+    public int skillPointsPerLevel = 1;
 
-    private int currentXP = 0;
-    private int currentLevel = 1;
+    [Header("Player Progress")]
+    [SerializeField] private int currentXP = 0;
+    [SerializeField] private int currentLevel = 1;
+    [SerializeField] private int skillPoints = 0;
 
-    public int CurrentXP    => currentXP;
+    private readonly string[] rankNames =
+    {
+    "Šiukšlė",
+    "Išmataveidis",
+    "Gandonas",
+    "Čmo",
+    "Pituhas",
+    "Urodas",
+    "Vaflis",
+    "Lavonas",
+    "Padugnė",
+    "Dušnyla",
+    "Mudakas",
+    "Plotnekas",
+    "Čiortas",
+    "Spektras",
+    "Monstras",
+    "Žvėris",
+    "Legenda",
+    "Caras",
+    "Dievas"
+    };
+
+    public int CurrentXP => currentXP;
     public int CurrentLevel => currentLevel;
+    public int SkillPoints => skillPoints;
+    public string CurrentRank => GetRankName(currentLevel);
 
-    // Subscribe to this from UI or other systems to react to level ups
     public UnityEvent<int> OnLevelUp = new UnityEvent<int>();
+    public UnityEvent<int> OnSkillPointsChanged = new UnityEvent<int>();
+    public UnityEvent<string> OnRankChanged = new UnityEvent<string>();
 
     private void Awake()
     {
@@ -32,17 +61,24 @@ public class ExperienceManager : MonoBehaviour
 
     public void AddXP(int amount)
     {
+        if (amount <= 0)
+            return;
+
         currentXP += amount;
-        Debug.Log($"Gained {amount} XP. Total: {currentXP}");
+
+        Debug.Log($"Gained {amount} XP. Total XP: {currentXP}");
 
         CheckLevelUp();
     }
+
     public void RemoveXP(int amount)
     {
-        currentXP -= amount;
-        Debug.Log($"Removed {amount} XP. Total: {currentXP}");
+        if (amount <= 0)
+            return;
 
-        CheckLevelUp();
+        currentXP = Mathf.Max(0, currentXP - amount);
+
+        Debug.Log($"Removed {amount} XP. Total XP: {currentXP}");
     }
 
     public int GetXPForNextLevel()
@@ -52,7 +88,39 @@ public class ExperienceManager : MonoBehaviour
 
     public float GetLevelProgress()
     {
-        return (float)currentXP / GetXPForNextLevel();
+        int xpForNextLevel = GetXPForNextLevel();
+
+        if (xpForNextLevel <= 0)
+            return 0f;
+
+        return Mathf.Clamp01((float)currentXP / xpForNextLevel);
+    }
+
+    public bool SpendSkillPoint(int amount = 1)
+    {
+        if (amount <= 0)
+            return false;
+
+        if (skillPoints < amount)
+            return false;
+
+        skillPoints -= amount;
+        OnSkillPointsChanged.Invoke(skillPoints);
+
+        Debug.Log($"Spent {amount} skill point(s). Remaining: {skillPoints}");
+
+        return true;
+    }
+
+    public void AddSkillPoints(int amount)
+    {
+        if (amount <= 0)
+            return;
+
+        skillPoints += amount;
+        OnSkillPointsChanged.Invoke(skillPoints);
+
+        Debug.Log($"Added {amount} skill point(s). Total: {skillPoints}");
     }
 
     private void CheckLevelUp()
@@ -61,8 +129,19 @@ public class ExperienceManager : MonoBehaviour
         {
             currentXP -= GetXPForNextLevel();
             currentLevel++;
-            Debug.Log($"Level up! Now level {currentLevel}");
+
+            AddSkillPoints(skillPointsPerLevel);
+
+            Debug.Log($"Level up! Now level {currentLevel}. Rank: {CurrentRank}");
+
             OnLevelUp.Invoke(currentLevel);
+            OnRankChanged.Invoke(CurrentRank);
         }
+    }
+
+    private string GetRankName(int level)
+    {
+        int rankIndex = Mathf.Clamp(level - 1, 0, rankNames.Length - 1);
+        return rankNames[rankIndex];
     }
 }
