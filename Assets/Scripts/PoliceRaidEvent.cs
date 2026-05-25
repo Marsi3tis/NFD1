@@ -5,9 +5,8 @@ using System.Collections.Generic;
 using UnityEngine.Events;
 
 
-public class PoliceEvent : MonoBehaviour
+public class PoliceRaidEvent : MonoBehaviour
 {
-
     [Serializable]
     public struct PoliceVariant
     {
@@ -61,7 +60,7 @@ public class PoliceEvent : MonoBehaviour
     [Header("Visual Asset Settings")]
     public List<PoliceVariant> eventVariants;
 
-    public static PoliceEvent Instance;
+    public static PoliceRaidEvent Instance;
 
     private PoliceVariant activeVariant;
     private string activeDialogue;
@@ -370,7 +369,7 @@ public class PoliceEvent : MonoBehaviour
 
         if (gameOverPanel != null)
             gameOverPanel.SetActive(false);
-            
+
         if (inGameObject != null)
             inGameObject.SetActive(true);
 

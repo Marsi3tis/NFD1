@@ -67,7 +67,7 @@ public class GopnikEvent : MonoBehaviour
         if (eventRunning)
             return false;
         
-        if (PoliceEvent.Instance != null && PoliceEvent.Instance.IsEventRunning)
+        if (PoliceRaidEvent.Instance != null && PoliceRaidEvent.Instance.IsEventRunning)
             return false;
 
         float roll = UnityEngine.Random.Range(0f, 1f);
@@ -80,7 +80,7 @@ public class GopnikEvent : MonoBehaviour
 
     public bool StartEventForced()
     {
-        if (PoliceEvent.Instance != null && PoliceEvent.Instance.IsEventRunning)
+        if (PoliceRaidEvent.Instance != null && PoliceRaidEvent.Instance.IsEventRunning)
             return false;
 
         if (eventRunning)

@@ -6,7 +6,7 @@ public class DropRandomEventManager : MonoBehaviour
 
     [Header("Event References")]
     [SerializeField] private GopnikEvent gopnikEvent;
-    [SerializeField] private PoliceEvent policeRaidEvent;
+    [SerializeField] private PoliceRaidEvent policeRaidEvent;
 
     [Header("Main Event Chance")]
     [Tooltip("Chance that ANY random event happens after picking up a drop.")]
