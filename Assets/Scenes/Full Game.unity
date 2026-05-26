@@ -16497,7 +16497,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 580a48032d0a2bf47a41605675fe938d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PoliceRaidEvent
+  eventChance: 0.15
+  runChance: 0.45
+  hideChance: 0.55
+  riskChance: 0.35
+  bribeCost: 150
+  runSuccessXP: 30
+  runFailXP: 50
+  hideSuccessXP: 25
+  hideFailXP: 40
+  bribeSuccessXP: 20
+  bribeFailXP: 60
+  riskSuccessXP: 60
+  riskFailXP: 80
   popUpUI: {fileID: 1346404380}
+  mainMenuObject: {fileID: 1408427327}
+  inGameObject: {fileID: 303043202}
+  gameOverPanel: {fileID: 0}
+  gameOverReasonText: {fileID: 0}
+  pauseGameOnGameOver: 1
+  onPlayerArrest:
+    m_PersistentCalls:
+      m_Calls: []
   eventVariants:
   - backgroundSprite: {fileID: -7586805112728245864, guid: bfa7f230cb2da1c46959da70b4a50370, type: 3}
     titleText: MENTAI
@@ -16526,23 +16547,6 @@ MonoBehaviour:
     - "-Aplinkuj pasteb\u0117ta nusikalstama veikla, pra\u0161au pateikite dokumentus."
     - "-Sveiki, pareig\u016Bnas Saulius Mangr\u016Bda, pra\u0161au pateikite dokumentus"
     policeBio: "Policija, jei ras tavo dropukus s\u0117si ilgam ir baigsis \u017Eaidimas."
-  eventChance: 0.15
-  documentsReleaseChance: 0.45
-  runSuccessChance: 0.3
-  bribeSuccessChance: 0.55
-  hideDropsSuccessChance: 0.4
-  bribeCost: 150
-  requireCurrencyForBribe: 1
-  currencyManager: {fileID: 1201967362}
-  canAffordMethodName: CanAfford
-  spendCurrencyMethodName: SpendScore
-  reloadCurrentSceneOnFail: 1
-  onRaidFailed:
-    m_PersistentCalls:
-      m_Calls: []
-  onRaidSuccess:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &993947541
 GameObject:
   m_ObjectHideFlags: 0
@@ -103403,6 +103407,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 388fe6ba912c09a40a7be7d6e807c340, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MoneyManager
+  money: 0
 --- !u!1 &1211957253
 GameObject:
   m_ObjectHideFlags: 0
