@@ -246,6 +246,10 @@ public class GopnikEvent : MonoBehaviour
     {
         if (ExperienceManager.Instance != null)
             ExperienceManager.Instance.AddXP(amount);
+        if (GameOverManager.Instance != null)
+        {
+            GameOverManager.Instance.RegisterGopnikEscape();
+        }
     }
 
     private void RemoveXP(int amount)
@@ -266,5 +270,11 @@ public class GopnikEvent : MonoBehaviour
             return fallback;
 
         return value;
+    }
+    public void ResetEventState()
+    {
+        eventRunning = false;
+        if (popUpUI != null)
+            popUpUI.Hide();
     }
 }

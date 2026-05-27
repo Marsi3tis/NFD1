@@ -3,7 +3,7 @@ using UnityEngine;
 public class MoneyManager : MonoBehaviour
 {
     public static MoneyManager Instance { get; private set; }
-
+    [SerializeField] private float startingMoney = 0f;
     [SerializeField] private float money = 0f;
 
     public float Money => money;
@@ -54,5 +54,9 @@ public class MoneyManager : MonoBehaviour
         money -= amount;
         Debug.Log($"Money spent: {amount}. Total: {money}");
         return true;
+    }
+    public void ResetMoney()
+    {
+        money = startingMoney;
     }
 }

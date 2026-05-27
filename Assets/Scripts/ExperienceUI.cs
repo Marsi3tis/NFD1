@@ -23,7 +23,7 @@ public class ExperienceUI : MonoBehaviour
 
         if (xpText != null)
             xpText.text = ExperienceManager.Instance.CurrentXP + " / " +
-                          ExperienceManager.Instance.GetXPForNextLevel() + " XP";
+                          ExperienceManager.Instance.GetXPForNextLevel();
 
         if (skillPointsText != null)
             skillPointsText.text = "Skill Points: " + ExperienceManager.Instance.SkillPoints;

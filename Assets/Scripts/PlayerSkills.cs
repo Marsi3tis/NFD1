@@ -16,7 +16,7 @@ public class PlayerSkills : MonoBehaviour
 
     [Header("Chance Bonus Per Point")]
     public float mahalkesBonusPerPoint = 0.10f;
-    public float pisiZaibaBonusPerPoint = 0.12f;
+    public float pisiZaibaBonusPerPoint = 0.10f;
 
     [Header("Vierhatura Requirement")]
     public int vierhaturaMinLevel = 15; // Monstras
@@ -145,5 +145,11 @@ public class PlayerSkills : MonoBehaviour
 
         vierhaturaLevel++;
         UnityEngine.Debug.Log("Vierhatura unlocked.");
+    }
+    public void ResetSkills()
+    {
+        mahalkesLevel = 0;
+        pisiZaibaLevel = 0;
+        vierhaturaLevel = 0;
     }
 }

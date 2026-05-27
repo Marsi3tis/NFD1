@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class FuelSystem : MonoBehaviour
 {
+    [Header("Game Over Manager")]
+    [SerializeField] private GameOverManager gameOverManager;
     [Header("Fuel")]
     public float maxFuel = 100f;
     public float currentFuel = 100f;
@@ -47,6 +49,12 @@ public class FuelSystem : MonoBehaviour
 
             if (rb != null)
                 rb.linearVelocity = Vector2.zero;
+            
+            GameOverManager manager = gameOverManager != null ? gameOverManager : GameOverManager.Instance;
+            if (manager != null)
+                manager.ShowFuelEmptyGameOver();
+            else
+                Debug.LogError("GameOverManager not found! Please assign it in the inspector or ensure it exists in the scene.");
         }
     }
 
@@ -56,6 +64,19 @@ public class FuelSystem : MonoBehaviour
         fuelEmptyLogged = false;
 
         if (movementScript != null && currentFuel > 0f)
+            movementScript.enabled = true;
+    }
+    public void ResetFuel()
+    {
+        currentFuel = maxFuel;
+        fuelEmptyLogged = false;
+
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector2.zero;
+            rb.angularVelocity = 0f;
+        }
+        if (movementScript != null)
             movementScript.enabled = true;
     }
 }

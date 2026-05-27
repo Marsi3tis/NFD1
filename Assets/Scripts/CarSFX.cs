@@ -12,6 +12,7 @@ public class CarSFX : MonoBehaviour
     float desiredEnginePitch = 0.7f;
     float tireSlidePitch = 0.5f;
     TopControl topControl;
+    private bool tireStoppedBecauseOfEvent;
     void Awake()
     {
         topControl = GetComponent<TopControl>();
@@ -34,6 +35,20 @@ public class CarSFX : MonoBehaviour
     }
     void UpdateTireSlideSFX()
     {
+        if (EventPopUpUI.IsEventActive)
+        {
+            tireSlideSource.volume = 0f;
+            tireStoppedBecauseOfEvent = true;
+            return;
+        }
+        if (tireStoppedBecauseOfEvent)
+        {
+            tireStoppedBecauseOfEvent = false;
+            tireSlideSource.volume = 0f;
+        }
+        if (!tireSlideSource.isPlaying)
+            tireSlideSource.Play();
+
         if (topControl.IsTireSliding(out float lateralVelocity, out bool isBrakingNow))
         {
             if (isBrakingNow)
@@ -48,6 +63,13 @@ public class CarSFX : MonoBehaviour
             }
         }
         else tireSlideSource.volume = Mathf.Lerp(tireSlideSource.volume, 0, Time.deltaTime * 10);
+    }
+    public void StopTireSlideImmediately()
+    {
+        if (tireSlideSource == null)
+        return;
+        tireSlideSource.volume = 0f;
+        tireSlideSource.Stop();
     }
     void OnCollisionEnter2D(Collision2D collision2D)
     {

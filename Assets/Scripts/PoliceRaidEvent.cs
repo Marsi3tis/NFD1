@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 
 public class PoliceRaidEvent : MonoBehaviour
-{
+{    
     [Serializable]
     public struct PoliceVariant
     {
@@ -48,11 +48,8 @@ public class PoliceRaidEvent : MonoBehaviour
     public EventPopUpUI popUpUI;
 
     [Header("Game Over UI")]
-    [SerializeField] private GameObject mainMenuObject;
-    [SerializeField] private GameObject inGameObject;
-    [SerializeField] private GameObject gameOverPanel;
-    [SerializeField] private TMP_Text gameOverReasonText;
-    [SerializeField] private bool pauseGameOnGameOver = true;
+    [SerializeField] private GameOverManager gameOverManager;
+    //[SerializeField] private bool pauseGameOnGameOver = true;
 
     [Header("Game Over Event")]
     public UnityEvent onPlayerArrest;
@@ -72,9 +69,6 @@ public class PoliceRaidEvent : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-
-        if (gameOverPanel != null)
-            gameOverPanel.SetActive(false);
     }
 
     public void DropIsPicked()
@@ -308,6 +302,11 @@ public class PoliceRaidEvent : MonoBehaviour
     private void FinishPoliceEvent()
     {
         eventRunning = false;
+        GameOverManager manager = gameOverManager != null ? gameOverManager : GameOverManager.Instance;
+        if (manager != null)
+        {
+            manager.RegisterPoliceEscape();
+        }
 
         if (popUpUI != null)
             popUpUI.Hide();
@@ -320,61 +319,15 @@ public class PoliceRaidEvent : MonoBehaviour
         if (popUpUI != null)
             popUpUI.Hide();
 
-        EndGame();
-    }
-
-    private void EndGame()
-    {
-        onPlayerArrest?.Invoke();
-        if (inGameObject != null)
-            inGameObject.SetActive(false);
-        
-        if (gameOverPanel != null)
+        GameOverManager manager = gameOverManager != null ? gameOverManager : GameOverManager.Instance;
+        if (manager != null)
         {
-            gameOverPanel.SetActive(true);
-
-            if (gameOverReasonText != null)
-                gameOverReasonText.text = SafeText(lastGameOverReason, "Game Over");
-
-            if (pauseGameOnGameOver)
-                Time.timeScale = 0f;
-
-            return;
+            manager.ShowPoliceArrestGameOver(lastGameOverReason);
         }
-        ShowMainMenu();
-    }
-    public void ShowMainMenu()
-    {
-        if (popUpUI != null)
-            popUpUI.Hide();
-
-        if (gameOverPanel != null)
-            gameOverPanel.SetActive(false);
-
-        if (inGameObject != null)
-            inGameObject.SetActive(false);
-
-        if (mainMenuObject != null)
-            mainMenuObject.SetActive(true);
         else
-            Debug.LogError("PoliceEvent: Main Menu Object is not assigned.");
-
-        if (pauseGameOnGameOver)
-            Time.timeScale = 0f;
-    }
-
-    public void RestartAfterGameOver()
-    {
-        Time.timeScale = 1f;
-
-        if (gameOverPanel != null)
-            gameOverPanel.SetActive(false);
-
-        if (inGameObject != null)
-            inGameObject.SetActive(true);
-
-        if (mainMenuObject != null)
-            mainMenuObject.SetActive(true);
+        {
+            Debug.LogError("GameOverManager not found! Please assign it in the inspector or ensure it exists in the scene.");
+        }
     }
     private void AddXP(int amount)
     {
@@ -400,5 +353,12 @@ public class PoliceRaidEvent : MonoBehaviour
             return fallback;
 
         return value;
+    }
+    public void ResetEventState()
+    {
+        eventRunning = false;
+        lastGameOverReason = "";
+        if (popUpUI != null)
+            popUpUI.Hide();
     }
 }

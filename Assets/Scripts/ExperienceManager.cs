@@ -56,7 +56,7 @@ public class ExperienceManager : MonoBehaviour
         }
 
         Instance = this;
-        DontDestroyOnLoad(gameObject);
+       // DontDestroyOnLoad(gameObject);
     }
 
     public void AddXP(int amount)
@@ -143,5 +143,14 @@ public class ExperienceManager : MonoBehaviour
     {
         int rankIndex = Mathf.Clamp(level - 1, 0, rankNames.Length - 1);
         return rankNames[rankIndex];
+    }
+    public void ResetProgress()
+    {
+        currentXP = 0;
+        currentLevel = 1;
+        skillPoints = 0;
+
+        OnSkillPointsChanged.Invoke(skillPoints);
+        OnRankChanged.Invoke(CurrentRank);
     }
 }

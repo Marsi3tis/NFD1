@@ -65,4 +65,11 @@ public class InventoryManager : MonoBehaviour
     public int GetCount(ItemType type) => inventory[type];
 
     public Dictionary<ItemType, int> GetAllItems() => new Dictionary<ItemType, int>(inventory);
+
+    public void ResetInventory()
+    {
+        List<ItemType> itemTypes = new List<ItemType>(inventory.Keys);
+        foreach (ItemType type in itemTypes)
+            inventory[type] = 0;
+    }
 }
