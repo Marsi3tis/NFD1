@@ -20,12 +20,10 @@ public class MenuController : MonoBehaviour
                 if (menuPanel.activeSelf)
                 {
                     ResumeGame();
-                    Debug.Log("Game Resumed");
                 }
                 else
                 {
                     PauseGame();
-                    Debug.Log("Game Paused 2");
 
                 }
             }
@@ -43,7 +41,6 @@ public class MenuController : MonoBehaviour
         
         Time.timeScale = 0f;
         menuPanel.SetActive(true);
-        Debug.Log("Game Paused 1");
     }
 
     void ResumeGame()
