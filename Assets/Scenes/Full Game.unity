@@ -1322,7 +1322,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 2
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 711034355}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -19018,7 +19018,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Compositor - Arijus Blockis
+  m_text: Compositor and Interactables  - Arijus Blockis
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e65125e4f0aa26b4faad42199ef08ba0, type: 2}
   m_sharedMaterial: {fileID: 4186530649708340385, guid: e65125e4f0aa26b4faad42199ef08ba0, type: 2}
